@@ -8,12 +8,20 @@ st.set_page_config(
     layout="wide"
 )
 
-st.markdown("""
-<hr>
-<p style='text-align:center; font-size:12px;'>
-📚 Quiz Acadêmico • Desenvolvido por 3° ano
-</p>
-""", unsafe_allow_html=True)
+st.markdown(
+    """
+    <style>
+    div[data-testid="stAppToolbar"] {
+        display: none !important;
+    }
+
+    div[data-testid="stStatusWidget"] {
+        display: none !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 st.markdown(
     """
