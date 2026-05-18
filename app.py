@@ -11,6 +11,37 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+    /* Esconde rodapé do Streamlit */
+    footer {
+        visibility: hidden !important;
+    }
+
+    /* Esconde menu superior */
+    #MainMenu {
+        visibility: hidden !important;
+    }
+
+    /* Esconde header */
+    header {
+        visibility: hidden !important;
+    }
+
+    /* Esconde a marca "Hosted with Streamlit" (versões novas) */
+    div[data-testid="stStatusWidget"] {
+        display: none !important;
+    }
+
+    div[data-testid="stToolbar"] {
+        display: none !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    """
+    <style>
     footer {visibility: hidden;}        
     #MainMenu {visibility: hidden;}
     header {visibility: hidden;}
