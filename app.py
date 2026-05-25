@@ -320,38 +320,65 @@ def chave_resposta(pergunta):
     return f"resposta_{st.session_state.quiz_tentativa}_{pergunta['id']}"
 
 
-def renderizar_alternativas_corrigidas(pergunta, resposta_usuario):
+def renderizar_resultado_quiz(perguntas, respostas_usuario):
     letras = ["A", "B", "C", "D"]
+    blocos_questoes = []
 
-    for letra, opcao in zip(letras, pergunta["opcoes"]):
-        foi_marcada = opcao == resposta_usuario
+    for indice, (pergunta, resposta_usuario) in enumerate(
+        zip(perguntas, respostas_usuario), start=1
+    ):
         acertou = resposta_usuario == pergunta["resposta"]
+        cor_status = "#16a34a" if acertou else "#dc2626"
+        fundo_status = "#f0fdf4" if acertou else "#fef2f2"
+        alternativas = []
 
-        if foi_marcada and acertou:
-            estilo = "background:#dcfce7;border-color:#16a34a;color:#14532d;"
-            marcador = "Sua resposta "
-        elif foi_marcada:
-            estilo = "background:#fee2e2;border-color:#dc2626;color:#7f1d1d;"
-            marcador = "Sua resposta "
-        else:
-            estilo = "background:#f8fafc;border-color:#cbd5e1;color:#334155;"
-            marcador = ""
+        for letra, opcao in zip(letras, pergunta["opcoes"]):
+            foi_marcada = opcao == resposta_usuario
 
-        st.markdown(
-            f"""
+            if foi_marcada and acertou:
+                estilo = "background:#dcfce7;border-color:#16a34a;color:#14532d;font-weight:600;"
+            elif foi_marcada:
+                estilo = "background:#fee2e2;border-color:#dc2626;color:#7f1d1d;font-weight:600;"
+            else:
+                estilo = "background:#f8fafc;border-color:#cbd5e1;color:#334155;"
+
+            alternativas.append(
+                f"""
             <div style="
                 border: 1px solid;
                 border-radius: 8px;
                 padding: 10px 12px;
                 margin: 6px 0;
                 font-size: 17px;
+                line-height: 1.35;
                 {estilo}
             ">
-                <strong>{letra})</strong> {marcador}{html.escape(opcao)}
+                <strong>{letra})</strong> {html.escape(opcao)}
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
+            )
+
+        blocos_questoes.append(
+            f"""
+            <section style="
+                border-left: 5px solid {cor_status};
+                background: {fundo_status};
+                padding: 14px 16px;
+                margin: 14px 0;
+                border-radius: 8px;
+            ">
+                <h3 style="
+                    margin: 0 0 10px 0;
+                    color: #111827;
+                    font-size: 20px;
+                    font-weight: 700;
+                ">{indice}. {html.escape(pergunta["pergunta"])}</h3>
+                {''.join(alternativas)}
+            </section>
+            """
         )
+
+    st.markdown("".join(blocos_questoes), unsafe_allow_html=True)
 
 
 if "quiz_tentativa" not in st.session_state:
@@ -402,12 +429,6 @@ if not mostrar_correcao:
         st.warning("Responda todas as perguntas antes de finalizar.")
 
 else:
-    for i, pergunta in enumerate(perguntas):
-        st.subheader(f"{i + 1}. {pergunta['pergunta']}")
-        renderizar_alternativas_corrigidas(pergunta, respostas_usuario[i])
-        with st.expander("Ver dica"):
-            st.write(pergunta["dica"])
-
     pontuacao = sum(
         resposta == pergunta["resposta"]
         for resposta, pergunta in zip(respostas_usuario, perguntas)
@@ -426,5 +447,7 @@ else:
         st.write("Bom trabalho!")
     else:
         st.write("Continue estudando!")
+
+    renderizar_resultado_quiz(perguntas, respostas_usuario)
 
     st.button("Refazer Quiz", on_click=reiniciar_quiz)
