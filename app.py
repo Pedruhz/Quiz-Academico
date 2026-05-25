@@ -174,11 +174,10 @@ with st.form("quiz_form"):
     for i, pergunta in enumerate(perguntas):
 
         resposta = st.radio(
-            f"{i+1}. {pergunta['pergunta']}",
-            pergunta["opcoes"],
-            index=None,
-            key=f"pergunta_{i}"
-        )
+    f"{i+1}. {pergunta['pergunta']}",
+    ["Selecione uma opção..."] + pergunta["opcoes"],
+    key=f"pergunta_{i}"
+)
 
         respostas_usuario.append(resposta)
 
@@ -187,7 +186,10 @@ with st.form("quiz_form"):
 if enviar:
 
     # Verifica se todas foram respondidas
-    if any(resposta is None for resposta in respostas_usuario):
+    if any(
+    resposta == "Selecione uma opção..."
+    for resposta in respostas_usuario
+):
 
         st.warning("Responda todas as perguntas antes de finalizar.")
 
