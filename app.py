@@ -199,7 +199,40 @@ PERGUNTAS = [
     },
 ]
 
-QUIZ_VERSAO = 3
+DICAS_POR_RESPOSTA = {
+    "1990": "A queda do Muro aconteceu um ano antes, mas a reunificacao oficial veio depois.",
+    "Bonn": "Era uma cidade menor, escolhida como capital provisoria da Alemanha Ocidental.",
+    "Bundestag": "E a casa parlamentar diretamente ligada aos representantes eleitos pela populacao.",
+    "Bundesrat": "O nome lembra uma instituicao federal formada por representantes dos estados.",
+    "16": "Pense em um numero maior que o de regioes brasileiras, mas menor que vinte.",
+    "Baviera": "Esse estado fica no sul e e muito associado a tradicoes como cerveja, trajes tipicos e Munique.",
+    "Reno": "E um dos rios mais importantes da Europa Ocidental e passa perto de Colonia.",
+    "Elba": "Esse rio liga uma importante cidade da Saxonia a uma grande cidade portuaria do norte.",
+    "Frankfurt": "A cidade e associada a bancos, aeroporto internacional e grandes feiras.",
+    "Hamburgo": "A cidade fica no norte e tem uma forte relacao com comercio maritimo.",
+    "Tratado Dois Mais Quatro": "O nome faz referencia as duas Alemanhas e as quatro potencias vencedoras da Segunda Guerra.",
+    "Milagre economico": "A expressao descreve uma recuperacao economica rapida e muito marcante.",
+    "Automobilistica": "Pense em marcas como Volkswagen, BMW, Mercedes-Benz, Audi e Porsche.",
+    "Volkswagen": "A sede da empresa fica em uma cidade planejada em torno da industria automotiva.",
+    "Immanuel Kant": "Esse filosofo e ligado ao Iluminismo e viveu em Konigsberg.",
+    "Ludwig van Beethoven": "Sua Nona Sinfonia tem o famoso coral conhecido como Ode a Alegria.",
+    "Reforma Protestante": "O movimento questionou praticas da Igreja Catolica no seculo XVI.",
+    "Wittenberg": "A cidade e muito associada a Martinho Lutero e a uma universidade historica.",
+    "Liga Hanseatica": "Foi uma rede de comercio poderosa no norte da Europa durante a Idade Media.",
+    "Berlim": "A cidade virou um simbolo da divisao politica do pos-guerra.",
+    "Berlim Ocidental": "Mesmo cercada pela Alemanha Oriental, essa parte era ligada aos paises ocidentais.",
+    "Republica Democratica Alema": "Apesar do nome, era o Estado socialista alinhado a Uniao Sovietica.",
+    "Republica Federal da Alemanha": "Esse nome ainda e usado oficialmente pela Alemanha atual.",
+    "Alpes": "Essa cadeia montanhosa tambem passa por Austria, Suica, Italia e Franca.",
+    "Floresta Negra": "O nome em portugues lembra uma regiao de paisagens densas no sudoeste alemao.",
+    "Colonia": "A catedral dessa cidade e um dos monumentos goticos mais famosos da Alemanha.",
+    "Regiao do Ruhr": "Essa area fica no oeste e foi muito importante para a industrializacao alema.",
+    "Deutsche Bahn": "O nome significa literalmente algo como ferrovia alema.",
+    "Autobahn": "O termo e usado para as autoestradas alemas.",
+    "Bundesliga": "O nome junta a ideia de liga nacional com o termo federal alemao.",
+}
+
+QUIZ_VERSAO = 4
 
 
 def criar_posicoes_respostas(total_perguntas, total_opcoes):
@@ -252,6 +285,7 @@ def criar_quiz():
     for i, pergunta in enumerate(perguntas):
         pergunta["id"] = i
         resposta = pergunta["resposta"]
+        pergunta["dica"] = DICAS_POR_RESPOSTA[resposta]
         alternativas_erradas = [
             opcao for opcao in pergunta["opcoes"] if opcao != resposta
         ]
@@ -306,6 +340,8 @@ with st.form("quiz_form"):
             index=None,
             key=f"resposta_{st.session_state.quiz_tentativa}_{pergunta['id']}",
         )
+        with st.expander("Ver dica"):
+            st.write(pergunta["dica"])
         respostas_usuario.append(resposta)
 
     enviar = st.form_submit_button("Finalizar Quiz")
