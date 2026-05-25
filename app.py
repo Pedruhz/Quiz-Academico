@@ -1,4 +1,7 @@
+# -*- coding: utf-8 -*-
+
 import copy
+import html
 import random
 
 import streamlit as st
@@ -48,38 +51,38 @@ st.write("Teste seus conhecimentos!")
 
 PERGUNTAS = [
     {
-        "pergunta": "Em que ano ocorreu a reunificacao oficial da Alemanha?",
+        "pergunta": "Em que ano ocorreu a reunificação oficial da Alemanha?",
         "opcoes": ["1989", "1990", "1991", "1993"],
         "resposta": "1990",
     },
     {
-        "pergunta": "Qual cidade foi capital da Alemanha Ocidental antes da reunificacao?",
+        "pergunta": "Qual cidade foi capital da Alemanha Ocidental antes da reunificação?",
         "opcoes": ["Bonn", "Hamburgo", "Dresden", "Frankfurt"],
         "resposta": "Bonn",
     },
     {
-        "pergunta": "Qual e o nome da camara baixa do parlamento alemao?",
+        "pergunta": "Qual é o nome da câmara baixa do parlamento alemão?",
         "opcoes": ["Bundestag", "Bundesrat", "Reichstag", "Landtag"],
         "resposta": "Bundestag",
     },
     {
-        "pergunta": "Qual instituicao representa os estados federados no sistema politico alemao?",
+        "pergunta": "Qual instituição representa os estados federados no sistema político alemão?",
         "opcoes": ["Bundesrat", "Bundestag", "Banco Central Europeu", "Tribunal de Berlim"],
         "resposta": "Bundesrat",
     },
     {
-        "pergunta": "Quantos estados federados, chamados Bundeslander, formam a Alemanha?",
+        "pergunta": "Quantos estados federados, chamados Bundesländer, formam a Alemanha?",
         "opcoes": ["12", "14", "16", "18"],
         "resposta": "16",
     },
     {
-        "pergunta": "Qual estado alemao e conhecido por Munique e pela Oktoberfest?",
-        "opcoes": ["Baviera", "Saxonia", "Hesse", "Sarre"],
+        "pergunta": "Qual estado alemão é conhecido por Munique e pela Oktoberfest?",
+        "opcoes": ["Baviera", "Saxônia", "Hesse", "Sarre"],
         "resposta": "Baviera",
     },
     {
-        "pergunta": "Qual rio forma parte importante da fronteira natural entre Alemanha e Franca?",
-        "opcoes": ["Reno", "Elba", "Danubio", "Oder"],
+        "pergunta": "Qual rio forma parte importante da fronteira natural entre Alemanha e França?",
+        "opcoes": ["Reno", "Elba", "Danúbio", "Oder"],
         "resposta": "Reno",
     },
     {
@@ -88,151 +91,151 @@ PERGUNTAS = [
         "resposta": "Elba",
     },
     {
-        "pergunta": "Qual cidade alema e um dos principais centros financeiros da Europa?",
+        "pergunta": "Qual cidade alemã é um dos principais centros financeiros da Europa?",
         "opcoes": ["Frankfurt", "Leipzig", "Nuremberg", "Bremen"],
         "resposta": "Frankfurt",
     },
     {
-        "pergunta": "Qual cidade alema e famosa por seu porto e por historica tradicao comercial?",
-        "opcoes": ["Hamburgo", "Colonia", "Stuttgart", "Dortmund"],
+        "pergunta": "Qual cidade alemã é famosa por seu porto e por histórica tradição comercial?",
+        "opcoes": ["Hamburgo", "Colônia", "Stuttgart", "Dortmund"],
         "resposta": "Hamburgo",
     },
     {
-        "pergunta": "Qual tratado encerrou formalmente muitos pontos pendentes apos a Segunda Guerra e abriu caminho para a reunificacao alema?",
+        "pergunta": "Qual tratado encerrou formalmente muitos pontos pendentes após a Segunda Guerra e abriu caminho para a reunificação alemã?",
         "opcoes": ["Tratado Dois Mais Quatro", "Tratado de Versalhes", "Tratado de Maastricht", "Tratado de Roma"],
         "resposta": "Tratado Dois Mais Quatro",
     },
     {
-        "pergunta": "Qual foi o nome dado ao periodo de forte crescimento economico da Alemanha Ocidental no pos-guerra?",
-        "opcoes": ["Milagre economico", "Plano Quinquenal", "Nova Politica Economica", "Grande Salto"],
-        "resposta": "Milagre economico",
+        "pergunta": "Qual foi o nome dado ao período de forte crescimento econômico da Alemanha Ocidental no pós-guerra?",
+        "opcoes": ["Milagre econômico", "Plano Quinquenal", "Nova Política Econômica", "Grande Salto"],
+        "resposta": "Milagre econômico",
     },
     {
-        "pergunta": "Qual industria e uma das mais associadas a economia alema no mercado mundial?",
-        "opcoes": ["Automobilistica", "Petrolifera", "Cinematografica", "Mineracao de ouro"],
-        "resposta": "Automobilistica",
+        "pergunta": "Qual indústria é uma das mais associadas à economia alemã no mercado mundial?",
+        "opcoes": ["Automobilística", "Petrolífera", "Cinematográfica", "Mineração de ouro"],
+        "resposta": "Automobilística",
     },
     {
-        "pergunta": "Qual empresa alema e conhecida mundialmente pela fabricacao de automoveis com sede em Wolfsburg?",
+        "pergunta": "Qual empresa alemã é conhecida mundialmente pela fabricação de automóveis com sede em Wolfsburg?",
         "opcoes": ["Volkswagen", "Porsche", "Opel", "MAN"],
         "resposta": "Volkswagen",
     },
     {
-        "pergunta": "Qual filosofo alemao escreveu a Critica da Razao Pura?",
+        "pergunta": "Qual filósofo alemão escreveu a Crítica da Razão Pura?",
         "opcoes": ["Immanuel Kant", "Karl Marx", "Friedrich Nietzsche", "Martin Heidegger"],
         "resposta": "Immanuel Kant",
     },
     {
-        "pergunta": "Qual compositor alemao e associado a obras como a Nona Sinfonia?",
+        "pergunta": "Qual compositor alemão é associado a obras como a Nona Sinfonia?",
         "opcoes": ["Ludwig van Beethoven", "Johannes Brahms", "Richard Wagner", "Robert Schumann"],
         "resposta": "Ludwig van Beethoven",
     },
     {
-        "pergunta": "Qual movimento religioso do seculo XVI teve forte ligacao com Martinho Lutero na Alemanha?",
+        "pergunta": "Qual movimento religioso do século XVI teve forte ligação com Martinho Lutero na Alemanha?",
         "opcoes": ["Reforma Protestante", "Contrarreforma", "Iluminismo", "Romantismo"],
         "resposta": "Reforma Protestante",
     },
     {
-        "pergunta": "Em qual cidade Martinho Lutero publicou suas 95 teses, segundo a tradicao historica?",
-        "opcoes": ["Wittenberg", "Munique", "Aachen", "Lubeck"],
+        "pergunta": "Em qual cidade Martinho Lutero publicou suas 95 teses, segundo a tradição histórica?",
+        "opcoes": ["Wittenberg", "Munique", "Aachen", "Lübeck"],
         "resposta": "Wittenberg",
     },
     {
-        "pergunta": "Qual antiga rota comercial do norte europeu incluiu importantes cidades alemas como Hamburgo e Lubeck?",
-        "opcoes": ["Liga Hanseatica", "Rota da Seda", "Liga Delos", "Caminho de Santiago"],
-        "resposta": "Liga Hanseatica",
+        "pergunta": "Qual antiga rota comercial do norte europeu incluiu importantes cidades alemãs como Hamburgo e Lübeck?",
+        "opcoes": ["Liga Hanseática", "Rota da Seda", "Liga Delos", "Caminho de Santiago"],
+        "resposta": "Liga Hanseática",
     },
     {
-        "pergunta": "Qual cidade alema foi dividida em setores apos a Segunda Guerra Mundial?",
-        "opcoes": ["Berlim", "Colonia", "Dusseldorf", "Stuttgart"],
+        "pergunta": "Qual cidade alemã foi dividida em setores após a Segunda Guerra Mundial?",
+        "opcoes": ["Berlim", "Colônia", "Düsseldorf", "Stuttgart"],
         "resposta": "Berlim",
     },
     {
-        "pergunta": "Qual lado de Berlim era administrado por Estados Unidos, Reino Unido e Franca durante a Guerra Fria?",
+        "pergunta": "Qual lado de Berlim era administrado por Estados Unidos, Reino Unido e França durante a Guerra Fria?",
         "opcoes": ["Berlim Ocidental", "Berlim Oriental", "Grande Berlim", "Berlim Norte"],
         "resposta": "Berlim Ocidental",
     },
     {
         "pergunta": "Qual era o nome oficial da Alemanha Oriental durante a Guerra Fria?",
-        "opcoes": ["Republica Democratica Alema", "Republica Federal Alema", "Imperio Alemao", "Confederacao Germanica"],
-        "resposta": "Republica Democratica Alema",
+        "opcoes": ["República Democrática Alemã", "República Federal Alemã", "Império Alemão", "Confederação Germânica"],
+        "resposta": "República Democrática Alemã",
     },
     {
         "pergunta": "Qual era o nome oficial da Alemanha Ocidental durante a Guerra Fria?",
-        "opcoes": ["Republica Federal da Alemanha", "Republica Democratica Alema", "Reino da Prussia", "Confederacao do Reno"],
-        "resposta": "Republica Federal da Alemanha",
+        "opcoes": ["República Federal da Alemanha", "República Democrática Alemã", "Reino da Prússia", "Confederação do Reno"],
+        "resposta": "República Federal da Alemanha",
     },
     {
-        "pergunta": "Qual cadeia montanhosa marca parte do sul da Alemanha e se estende por varios paises europeus?",
+        "pergunta": "Qual cadeia montanhosa marca parte do sul da Alemanha e se estende por vários países europeus?",
         "opcoes": ["Alpes", "Pirineus", "Carpatos", "Apeninos"],
         "resposta": "Alpes",
     },
     {
-        "pergunta": "Qual floresta alema e famosa por suas paisagens densas e inspiracao para lendas e contos?",
-        "opcoes": ["Floresta Negra", "Floresta Amazonica", "Floresta de Sherwood", "Taiga Siberiana"],
+        "pergunta": "Qual floresta alemã é famosa por suas paisagens densas e inspiração para lendas e contos?",
+        "opcoes": ["Floresta Negra", "Floresta Amazônica", "Floresta de Sherwood", "Taiga Siberiana"],
         "resposta": "Floresta Negra",
     },
     {
-        "pergunta": "Qual cidade alema abriga a famosa catedral gotica proxima ao rio Reno?",
-        "opcoes": ["Colonia", "Bremen", "Hannover", "Essen"],
-        "resposta": "Colonia",
+        "pergunta": "Qual cidade alemã abriga a famosa catedral gótica próxima ao rio Reno?",
+        "opcoes": ["Colônia", "Bremen", "Hannover", "Essen"],
+        "resposta": "Colônia",
     },
     {
-        "pergunta": "Qual area industrial historica da Alemanha ficou conhecida pela producao de carvao e aco?",
-        "opcoes": ["Regiao do Ruhr", "Vale do Loire", "Planicie da Lombardia", "Delta do Danubio"],
-        "resposta": "Regiao do Ruhr",
+        "pergunta": "Qual área industrial histórica da Alemanha ficou conhecida pela produção de carvão e aço?",
+        "opcoes": ["Região do Ruhr", "Vale do Loire", "Planície da Lombardia", "Delta do Danúbio"],
+        "resposta": "Região do Ruhr",
     },
     {
-        "pergunta": "Qual sistema de transporte alemao e conhecido por trens de alta velocidade chamados ICE?",
+        "pergunta": "Qual sistema de transporte alemão é conhecido por trens de alta velocidade chamados ICE?",
         "opcoes": ["Deutsche Bahn", "Lufthansa", "Autobahn", "Bundesliga"],
         "resposta": "Deutsche Bahn",
     },
     {
-        "pergunta": "Qual termo se refere as rodovias alemas conhecidas por trechos sem limite geral de velocidade?",
+        "pergunta": "Qual termo se refere às rodovias alemãs conhecidas por trechos sem limite geral de velocidade?",
         "opcoes": ["Autobahn", "Bundestag", "S-Bahn", "U-Bahn"],
         "resposta": "Autobahn",
     },
     {
-        "pergunta": "Qual campeonato nacional de futebol e o principal da Alemanha?",
+        "pergunta": "Qual campeonato nacional de futebol é o principal da Alemanha?",
         "opcoes": ["Bundesliga", "La Liga", "Serie A", "Premier League"],
         "resposta": "Bundesliga",
     },
 ]
 
 DICAS_POR_RESPOSTA = {
-    "1990": "A queda do Muro aconteceu um ano antes, mas a reunificacao oficial veio depois.",
-    "Bonn": "Era uma cidade menor, escolhida como capital provisoria da Alemanha Ocidental.",
-    "Bundestag": "E a casa parlamentar diretamente ligada aos representantes eleitos pela populacao.",
-    "Bundesrat": "O nome lembra uma instituicao federal formada por representantes dos estados.",
-    "16": "Pense em um numero maior que o de regioes brasileiras, mas menor que vinte.",
-    "Baviera": "Esse estado fica no sul e e muito associado a tradicoes como cerveja, trajes tipicos e Munique.",
-    "Reno": "E um dos rios mais importantes da Europa Ocidental e passa perto de Colonia.",
-    "Elba": "Esse rio liga uma importante cidade da Saxonia a uma grande cidade portuaria do norte.",
-    "Frankfurt": "A cidade e associada a bancos, aeroporto internacional e grandes feiras.",
-    "Hamburgo": "A cidade fica no norte e tem uma forte relacao com comercio maritimo.",
-    "Tratado Dois Mais Quatro": "O nome faz referencia as duas Alemanhas e as quatro potencias vencedoras da Segunda Guerra.",
-    "Milagre economico": "A expressao descreve uma recuperacao economica rapida e muito marcante.",
-    "Automobilistica": "Pense em marcas como Volkswagen, BMW, Mercedes-Benz, Audi e Porsche.",
-    "Volkswagen": "A sede da empresa fica em uma cidade planejada em torno da industria automotiva.",
-    "Immanuel Kant": "Esse filosofo e ligado ao Iluminismo e viveu em Konigsberg.",
-    "Ludwig van Beethoven": "Sua Nona Sinfonia tem o famoso coral conhecido como Ode a Alegria.",
-    "Reforma Protestante": "O movimento questionou praticas da Igreja Catolica no seculo XVI.",
-    "Wittenberg": "A cidade e muito associada a Martinho Lutero e a uma universidade historica.",
-    "Liga Hanseatica": "Foi uma rede de comercio poderosa no norte da Europa durante a Idade Media.",
-    "Berlim": "A cidade virou um simbolo da divisao politica do pos-guerra.",
-    "Berlim Ocidental": "Mesmo cercada pela Alemanha Oriental, essa parte era ligada aos paises ocidentais.",
-    "Republica Democratica Alema": "Apesar do nome, era o Estado socialista alinhado a Uniao Sovietica.",
-    "Republica Federal da Alemanha": "Esse nome ainda e usado oficialmente pela Alemanha atual.",
-    "Alpes": "Essa cadeia montanhosa tambem passa por Austria, Suica, Italia e Franca.",
-    "Floresta Negra": "O nome em portugues lembra uma regiao de paisagens densas no sudoeste alemao.",
-    "Colonia": "A catedral dessa cidade e um dos monumentos goticos mais famosos da Alemanha.",
-    "Regiao do Ruhr": "Essa area fica no oeste e foi muito importante para a industrializacao alema.",
-    "Deutsche Bahn": "O nome significa literalmente algo como ferrovia alema.",
-    "Autobahn": "O termo e usado para as autoestradas alemas.",
-    "Bundesliga": "O nome junta a ideia de liga nacional com o termo federal alemao.",
+    "1990": "Pense na sequência dos acontecimentos da Guerra Fria: primeiro veio a abertura da fronteira em Berlim, depois as negociações políticas e só então a unificação formal do país.",
+    "Bonn": "A capital da Alemanha Ocidental não era uma das maiores cidades do país. Ela foi escolhida no pós-guerra como uma solução mais discreta e provisória, enquanto Berlim continuava dividida.",
+    "Bundestag": "Na política alemã, procure pela instituição que funciona como a principal casa legislativa eleita pela população. É nela que deputados discutem leis e escolhem o chanceler.",
+    "Bundesrat": "A Alemanha é uma federação. Então, além dos deputados eleitos nacionalmente, existe uma casa que permite aos governos dos estados participarem das decisões federais.",
+    "16": "A Alemanha é dividida em estados federados, alguns grandes e famosos, outros bem pequenos, como cidades-estado. O número total fica entre 15 e 17.",
+    "Baviera": "Associe a pergunta ao sul da Alemanha: montanhas, tradições regionais fortes, Munique, Oktoberfest e uma identidade cultural muito marcada dentro do país.",
+    "Reno": "Esse rio é muito importante para transporte, comércio e fronteiras na Europa Ocidental. Ele passa por regiões industriais e também perto de cidades como Colônia.",
+    "Elba": "Observe as cidades citadas: Dresden fica mais a leste, enquanto Hamburgo fica no norte e tem porto. O rio correto cria uma ligação entre essas duas áreas.",
+    "Frankfurt": "Pense na cidade alemã ligada a bancos, Bolsa de Valores, Banco Central Europeu, feiras internacionais e um dos aeroportos mais movimentados do continente.",
+    "Hamburgo": "A pista principal é o porto. Essa cidade do norte cresceu historicamente ligada ao comércio marítimo, à navegação e às rotas comerciais europeias.",
+    "Tratado Dois Mais Quatro": "O acordo envolveu as duas Alemanhas e quatro potências vencedoras da Segunda Guerra Mundial. Ele resolveu questões externas que ainda impediam a reunificação completa.",
+    "Milagre econômico": "Depois da Segunda Guerra, a Alemanha Ocidental passou por uma recuperação muito rápida, com crescimento industrial, aumento de consumo e reconstrução acelerada.",
+    "Automobilística": "A Alemanha é muito associada à engenharia, exportações e marcas globais de carros. Pense no setor que inclui empresas como BMW, Mercedes-Benz, Audi, Porsche e Volkswagen.",
+    "Volkswagen": "A sede dessa empresa fica em Wolfsburg, uma cidade fortemente ligada à produção de carros. O nome da marca também remete à ideia de carro popular.",
+    "Immanuel Kant": "A obra citada pertence ao Iluminismo e discute os limites e possibilidades do conhecimento humano. O autor viveu em Königsberg e é central na filosofia moderna.",
+    "Ludwig van Beethoven": "A Nona Sinfonia é famosa pelo trecho coral conhecido como Ode à Alegria. O compositor é um dos nomes mais lembrados da música clássica alemã.",
+    "Reforma Protestante": "No século XVI, Martinho Lutero criticou práticas da Igreja Católica, especialmente a venda de indulgências, dando origem a um movimento religioso de grande impacto na Europa.",
+    "Wittenberg": "A tradição histórica liga as 95 teses a uma cidade universitária da Saxônia. Ela virou um dos principais símbolos do início da Reforma.",
+    "Liga Hanseática": "Durante a Idade Média, várias cidades do norte europeu se uniram para fortalecer o comércio. Hamburgo e Lübeck foram centros importantes dessa rede.",
+    "Berlim": "Depois da Segunda Guerra, essa cidade ficou dividida em zonas controladas por potências diferentes. Mais tarde, tornou-se o maior símbolo da divisão entre capitalismo e socialismo na Europa.",
+    "Berlim Ocidental": "Mesmo localizada dentro da Alemanha Oriental, essa parte da cidade era administrada por potências ocidentais e representava a presença capitalista durante a Guerra Fria.",
+    "República Democrática Alemã": "Apesar do termo 'democrática' no nome, esse Estado era socialista, alinhado à União Soviética e localizado no lado oriental da divisão alemã.",
+    "República Federal da Alemanha": "Esse nome estava ligado ao lado ocidental durante a Guerra Fria e continuou sendo o nome oficial do país após a reunificação.",
+    "Alpes": "A pista está no sul da Alemanha. Essa cadeia montanhosa também passa por países vizinhos como Áustria, Suíça, Itália e França.",
+    "Floresta Negra": "Essa região fica no sudoeste alemão, é conhecida por paisagens densas, vilarejos tradicionais, relógios cuco e forte presença em lendas e contos.",
+    "Colônia": "A cidade fica às margens do Reno e possui uma catedral gótica muito alta e famosa, que sobreviveu como símbolo histórico e turístico.",
+    "Região do Ruhr": "Procure pela área do oeste alemão marcada pela industrialização pesada. Ela foi muito importante na produção de carvão, aço e no crescimento econômico do país.",
+    "Deutsche Bahn": "A pergunta fala de trens de alta velocidade. O nome correto é o da empresa nacional de ferrovias, responsável por muitos serviços ferroviários na Alemanha.",
+    "Autobahn": "O termo se refere ao sistema de autoestradas. Ele ficou famoso internacionalmente porque alguns trechos não possuem limite geral fixo de velocidade.",
+    "Bundesliga": "O campeonato nacional alemão usa um nome ligado à ideia de liga federal. É nele que clubes como Bayern de Munique e Borussia Dortmund competem.",
 }
 
-QUIZ_VERSAO = 4
+QUIZ_VERSAO = 7
 
 
 def criar_posicoes_respostas(total_perguntas, total_opcoes):
@@ -313,6 +316,44 @@ def reiniciar_quiz():
     st.session_state.quiz_enviado = False
 
 
+def chave_resposta(pergunta):
+    return f"resposta_{st.session_state.quiz_tentativa}_{pergunta['id']}"
+
+
+def renderizar_alternativas_corrigidas(pergunta, resposta_usuario):
+    letras = ["A", "B", "C", "D"]
+
+    for letra, opcao in zip(letras, pergunta["opcoes"]):
+        foi_marcada = opcao == resposta_usuario
+        acertou = resposta_usuario == pergunta["resposta"]
+
+        if foi_marcada and acertou:
+            estilo = "background:#dcfce7;border-color:#16a34a;color:#14532d;"
+            marcador = "Sua resposta "
+        elif foi_marcada:
+            estilo = "background:#fee2e2;border-color:#dc2626;color:#7f1d1d;"
+            marcador = "Sua resposta "
+        else:
+            estilo = "background:#f8fafc;border-color:#cbd5e1;color:#334155;"
+            marcador = ""
+
+        st.markdown(
+            f"""
+            <div style="
+                border: 1px solid;
+                border-radius: 8px;
+                padding: 10px 12px;
+                margin: 6px 0;
+                font-size: 17px;
+                {estilo}
+            ">
+                <strong>{letra})</strong> {marcador}{html.escape(opcao)}
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+
 if "quiz_tentativa" not in st.session_state:
     st.session_state.quiz_tentativa = 0
 
@@ -330,48 +371,60 @@ if "quiz_enviado" not in st.session_state:
 
 
 perguntas = st.session_state.quiz_perguntas
-respostas_usuario = []
+respostas_usuario = [
+    st.session_state.get(chave_resposta(pergunta)) for pergunta in perguntas
+]
+faltando_resposta = any(resposta is None for resposta in respostas_usuario)
+mostrar_correcao = st.session_state.quiz_enviado and not faltando_resposta
 
-with st.form("quiz_form"):
+if not mostrar_correcao:
+    with st.form("quiz_form"):
+        respostas_usuario = []
+
+        for i, pergunta in enumerate(perguntas):
+            resposta = st.radio(
+                f"{i + 1}. {pergunta['pergunta']}",
+                pergunta["opcoes"],
+                index=None,
+                key=chave_resposta(pergunta),
+            )
+            with st.expander("Ver dica"):
+                st.write(pergunta["dica"])
+            respostas_usuario.append(resposta)
+
+        enviar = st.form_submit_button("Finalizar Quiz")
+
+    if enviar:
+        st.session_state.quiz_enviado = True
+        faltando_resposta = any(resposta is None for resposta in respostas_usuario)
+
+    if st.session_state.quiz_enviado and faltando_resposta:
+        st.warning("Responda todas as perguntas antes de finalizar.")
+
+else:
     for i, pergunta in enumerate(perguntas):
-        resposta = st.radio(
-            f"{i + 1}. {pergunta['pergunta']}",
-            pergunta["opcoes"],
-            index=None,
-            key=f"resposta_{st.session_state.quiz_tentativa}_{pergunta['id']}",
-        )
+        st.subheader(f"{i + 1}. {pergunta['pergunta']}")
+        renderizar_alternativas_corrigidas(pergunta, respostas_usuario[i])
         with st.expander("Ver dica"):
             st.write(pergunta["dica"])
-        respostas_usuario.append(resposta)
 
-    enviar = st.form_submit_button("Finalizar Quiz")
+    pontuacao = sum(
+        resposta == pergunta["resposta"]
+        for resposta, pergunta in zip(respostas_usuario, perguntas)
+    )
+    porcentagem = (pontuacao / len(perguntas)) * 100
 
-if enviar:
-    st.session_state.quiz_enviado = True
+    st.success(f"Você acertou {pontuacao} de {len(perguntas)} perguntas!")
+    st.info(f"Pontuação final: {porcentagem:.0f}%")
 
-if st.session_state.quiz_enviado:
-    faltando_resposta = any(resposta is None for resposta in respostas_usuario)
-
-    if faltando_resposta:
-        st.warning("Responda todas as perguntas antes de finalizar.")
+    if porcentagem == 100:
+        st.balloons()
+        st.write("Excelente desempenho!")
+    elif porcentagem >= 70:
+        st.write("Muito bom!")
+    elif porcentagem >= 50:
+        st.write("Bom trabalho!")
     else:
-        pontuacao = sum(
-            resposta == pergunta["resposta"]
-            for resposta, pergunta in zip(respostas_usuario, perguntas)
-        )
-        porcentagem = (pontuacao / len(perguntas)) * 100
+        st.write("Continue estudando!")
 
-        st.success(f"Voce acertou {pontuacao} de {len(perguntas)} perguntas!")
-        st.info(f"Pontuacao final: {porcentagem:.0f}%")
-
-        if porcentagem == 100:
-            st.balloons()
-            st.write("Excelente desempenho!")
-        elif porcentagem >= 70:
-            st.write("Muito bom!")
-        elif porcentagem >= 50:
-            st.write("Bom trabalho!")
-        else:
-            st.write("Continue estudando!")
-
-        st.button("Refazer Quiz", on_click=reiniciar_quiz)
+    st.button("Refazer Quiz", on_click=reiniciar_quiz)
