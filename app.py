@@ -329,18 +329,18 @@ def renderizar_resultado_quiz(perguntas, respostas_usuario):
     ):
         acertou = resposta_usuario == pergunta["resposta"]
         cor_status = "#16a34a" if acertou else "#dc2626"
-        fundo_status = "#f0fdf4" if acertou else "#fef2f2"
+        fundo_status = "#111827"
         alternativas = []
 
         for letra, opcao in zip(letras, pergunta["opcoes"]):
             foi_marcada = opcao == resposta_usuario
 
             if foi_marcada and acertou:
-                estilo = "background:#dcfce7;border-color:#16a34a;color:#14532d;font-weight:600;"
+                estilo = "background:#14532d;border-color:#22c55e;color:#dcfce7;font-weight:600;"
             elif foi_marcada:
-                estilo = "background:#fee2e2;border-color:#dc2626;color:#7f1d1d;font-weight:600;"
+                estilo = "background:#7f1d1d;border-color:#ef4444;color:#fee2e2;font-weight:600;"
             else:
-                estilo = "background:#f8fafc;border-color:#cbd5e1;color:#334155;"
+                estilo = "background:#1f2937;border-color:#374151;color:#e5e7eb;"
 
             alternativas.append(
                 f"""
@@ -369,7 +369,7 @@ def renderizar_resultado_quiz(perguntas, respostas_usuario):
             ">
                 <h3 style="
                     margin: 0 0 10px 0;
-                    color: #111827;
+                    color: #f9fafb;
                     font-size: 20px;
                     font-weight: 700;
                 ">{indice}. {html.escape(pergunta["pergunta"])}</h3>
@@ -379,6 +379,33 @@ def renderizar_resultado_quiz(perguntas, respostas_usuario):
         )
 
     st.markdown("".join(blocos_questoes), unsafe_allow_html=True)
+
+
+def aplicar_tema_resultado():
+    st.markdown(
+        """
+        <style>
+        .stApp {
+            background: #020617;
+            color: #e5e7eb;
+        }
+
+        .stApp h1,
+        .stApp h2,
+        .stApp h3,
+        .stApp p,
+        .stApp span,
+        .stApp div {
+            color: inherit;
+        }
+
+        div[data-testid="stAlert"] {
+            border-radius: 8px;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 if "quiz_tentativa" not in st.session_state:
@@ -424,11 +451,15 @@ if not mostrar_correcao:
     if enviar:
         st.session_state.quiz_enviado = True
         faltando_resposta = any(resposta is None for resposta in respostas_usuario)
+        if not faltando_resposta:
+            st.rerun()
 
     if st.session_state.quiz_enviado and faltando_resposta:
         st.warning("Responda todas as perguntas antes de finalizar.")
 
 else:
+    aplicar_tema_resultado()
+
     pontuacao = sum(
         resposta == pergunta["resposta"]
         for resposta, pergunta in zip(respostas_usuario, perguntas)
