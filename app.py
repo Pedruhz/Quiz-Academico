@@ -4,9 +4,6 @@ import random
 import streamlit as st
 
 
-OPCAO_PADRAO = "Selecione uma opcao..."
-
-
 st.set_page_config(
     page_title="Quiz-Alemanha",
     page_icon="📚",
@@ -170,24 +167,30 @@ PERGUNTAS = [
 
 def criar_quiz():
     perguntas = copy.deepcopy(PERGUNTAS)
-    random.shuffle(perguntas)
 
-    for pergunta in perguntas:
+    for i, pergunta in enumerate(perguntas):
+        pergunta["id"] = i
         random.shuffle(pergunta["opcoes"])
+
+    random.shuffle(perguntas)
 
     return perguntas
 
 
-def reiniciar_quiz():
-    st.session_state.quiz_perguntas = criar_quiz()
-    st.session_state.quiz_enviado = False
-
+def limpar_respostas():
     for chave in list(st.session_state.keys()):
-        if chave.startswith("pergunta_"):
+        if chave.startswith(("pergunta_", "resposta_")):
             del st.session_state[chave]
 
 
+def reiniciar_quiz():
+    limpar_respostas()
+    st.session_state.quiz_perguntas = criar_quiz()
+    st.session_state.quiz_enviado = False
+
+
 if "quiz_perguntas" not in st.session_state:
+    limpar_respostas()
     st.session_state.quiz_perguntas = criar_quiz()
 
 if "quiz_enviado" not in st.session_state:
@@ -201,8 +204,9 @@ with st.form("quiz_form"):
     for i, pergunta in enumerate(perguntas):
         resposta = st.radio(
             f"{i + 1}. {pergunta['pergunta']}",
-            [OPCAO_PADRAO] + pergunta["opcoes"],
-            key=f"pergunta_{i}",
+            pergunta["opcoes"],
+            index=None,
+            key=f"resposta_{pergunta['id']}",
         )
         respostas_usuario.append(resposta)
 
@@ -212,7 +216,7 @@ if enviar:
     st.session_state.quiz_enviado = True
 
 if st.session_state.quiz_enviado:
-    faltando_resposta = any(resposta == OPCAO_PADRAO for resposta in respostas_usuario)
+    faltando_resposta = any(resposta is None for resposta in respostas_usuario)
 
     if faltando_resposta:
         st.warning("Responda todas as perguntas antes de finalizar.")
