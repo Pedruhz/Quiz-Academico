@@ -3,7 +3,7 @@ import random
 
 # Configuração da página
 st.set_page_config(
-    page_title="Quiz Acadêmico",
+    page_title="Quiz-Alemanha",
     page_icon="📚",
     layout="wide"
 )
@@ -56,7 +56,7 @@ st.markdown(
 )
 
 # Título
-st.title("📚 Quiz Acadêmico")
+st.title("📚 Quiz-Alemanha")
 st.write("Teste seus conhecimentos!")
 
 # Perguntas
@@ -169,49 +169,57 @@ for pergunta in perguntas:
 pontuacao = 0
 respostas_usuario = []
 
-# Formulário
 with st.form("quiz_form"):
 
     for i, pergunta in enumerate(perguntas):
+
         resposta = st.radio(
             f"{i+1}. {pergunta['pergunta']}",
             pergunta["opcoes"],
             index=None,
-            key=i
+            key=f"pergunta_{i}"
         )
 
         respostas_usuario.append(resposta)
 
     enviar = st.form_submit_button("Finalizar Quiz")
 
-# Resultado
 if enviar:
-    if None in respostas_usuario:
+
+    # Verifica se todas foram respondidas
+    if any(resposta is None for resposta in respostas_usuario):
+
         st.warning("Responda todas as perguntas antes de finalizar.")
 
     else:
 
+        # Corrige o quiz
         for i, pergunta in enumerate(perguntas):
+
             if respostas_usuario[i] == pergunta["resposta"]:
                 pontuacao += 1
 
-        st.success(f"Você acertou {pontuacao} de {len(perguntas)} perguntas!")
-
         porcentagem = (pontuacao / len(perguntas)) * 100
+
+        st.success(
+            f"Você acertou {pontuacao} de {len(perguntas)} perguntas!"
+        )
 
         st.info(f"Pontuação final: {porcentagem:.0f}%")
 
-        # Feedback
         if porcentagem == 100:
             st.balloons()
             st.write("Excelente desempenho!")
+
         elif porcentagem >= 70:
             st.write("Muito bom!")
+
         elif porcentagem >= 50:
             st.write("Bom trabalho!")
+
         else:
             st.write("Continue estudando!")
 
-# Botão de reiniciar
-if st.button("Refazer Quiz"):
-    st.rerun()  
+        # Botão de reiniciar
+        if st.button("Refazer Quiz"):
+            st.rerun()
